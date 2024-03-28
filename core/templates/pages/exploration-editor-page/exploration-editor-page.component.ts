@@ -678,6 +678,12 @@ export class ExplorationEditorPageComponent implements OnInit, OnDestroy {
     this.initExplorationPage();
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.routerService.navigateToHashTab();
+    }, 0);
+  }
+
   isImprovementsTabEnabled(): boolean {
     return this.improvementsTabIsEnabled;
   }

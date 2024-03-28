@@ -66,7 +66,8 @@ export class RouterService {
     private stateEditorService: StateEditorService,
     private location: PlatformLocation,
     private ngZone: NgZone
-  ) {
+  ) {}
+  navigateToHashTab(): void{
     this._changeTab(this.windowRef.nativeWindow.location.hash.split('#')[1]);
 
     this.location.onPopState(() => {
