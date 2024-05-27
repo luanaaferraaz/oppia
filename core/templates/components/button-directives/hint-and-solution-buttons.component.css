@@ -40,7 +40,8 @@ oppia-hint-and-solution-buttons .hint-box {
   box-shadow: 0 0 6px #2d4a9d;
   color: #2d4a9d;
   display: flex;
-  font-size: 17px;
+  font-size: 25px;
+  font-weight: bold;
   height: 40px;
   min-width: 395px;
   padding: 20px 10px 20px 10px;
@@ -184,6 +185,10 @@ oppia-hint-and-solution-buttons .hint-box::before {
   min-width: 22px;
   padding: inherit;
   width: 32px;
+}
+
+.md-button.md-default-theme.oppia-learner-hint-solution-button:hover {
+  outline: 2px solid white;
 }
 
 .md-button.md-default-theme.oppia-learner-hint-solution-button.viewed {

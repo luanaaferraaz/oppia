@@ -82,3 +82,32 @@ oppia-input-response-pair .oppia-popover {
 .conversation-skin-oppia-avatar {
   left: -87px;
 }
+
+.md-button.md-default-theme.oppia-learner-solution-button {
+  background-color: #b25239;
+  border: none;
+  border-radius: 0;
+  color: white;
+  cursor: pointer;
+  height: auto;
+  line-height: normal;
+  min-height: 32px;
+  min-width: 22px;
+  padding: 8px 16px;
+  text-align: center;
+  transition: outline 0.1s, background-color 0.1s;
+  width: auto;
+}
+
+.md-button.md-default-theme.oppia-learner-solution-button:hover {
+  background-color: #c56147;
+  outline: 2px solid white;
+}
+
+.solution-content {
+  flex: 1;
+}
+
+.button-container {
+  margin-left: 10px;
+}

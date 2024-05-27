@@ -132,10 +132,6 @@ export class HintAndSolutionButtonsComponent implements OnInit, OnDestroy {
     );
   }
 
-  isSolutionButtonVisible(): boolean {
-    return this.hintsAndSolutionManagerService.isSolutionViewable();
-  }
-
   displayHintModal(index: number): void {
     this.activeHintIndex = index;
     let promise = this.hintAndSolutionModalService.displayHintModal(index);
@@ -145,52 +141,12 @@ export class HintAndSolutionButtonsComponent implements OnInit, OnDestroy {
     this.isVisible = false;
   }
 
-  onClickSolutionButton(): void {
-    this.solutionModalIsActive = true;
-    if (this.hintsAndSolutionManagerService.isSolutionConsumed()) {
-      this.displaySolutionModal();
-    } else {
-      let interstitialModalPromise =
-        this.hintAndSolutionModalService.displaySolutionInterstitialModal();
-      interstitialModalPromise.result.then(
-        () => {
-          this.displaySolutionModal();
-        },
-        () => {
-          this.solutionModalIsActive = false;
-        }
-      );
-    }
-  }
-
-  displaySolutionModal(): void {
-    this.solutionModalIsActive = true;
-    let inQuestionMode = this.explorationPlayerStateService.isInQuestionMode();
-    if (!this._editorPreviewMode && !inQuestionMode) {
-      this.statsReportingService.recordSolutionHit(
-        this.playerPositionService.getCurrentStateName()
-      );
-    }
-    let promise = this.hintAndSolutionModalService.displaySolutionModal();
-    promise.result.then(null, () => {
-      this.solutionModalIsActive = false;
-    });
-  }
-
   isTooltipVisible(): boolean {
     return this.hintsAndSolutionManagerService.isHintTooltipOpen();
   }
 
-  isSolutionTooltipVisible(): boolean {
-    return this.hintsAndSolutionManagerService.isSolutionTooltipOpen();
-  }
-
   isHintConsumed(hintIndex: number): boolean {
     return this.hintsAndSolutionManagerService.isHintConsumed(hintIndex);
-  }
-
-  isSolutionConsumed(): boolean {
-    return this.hintsAndSolutionManagerService.isSolutionConsumed();
   }
 }
 

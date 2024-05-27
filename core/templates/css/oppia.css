@@ -214,9 +214,14 @@ why they need to be overriden.  */
 
 .md-button.oppia-learner-confirm-button,
 .mat-button.oppia-learner-confirm-button,
-.md-button.oppia-learner-got-it-button,
 .md-button.oppia-learner-hint-solution-button {
   background: #0d48a1;
+  color: #fff;
+  padding: 6px 12px;
+}
+
+.md-button.oppia-learner-got-it-button {
+  background: #00786d;
   color: #fff;
   padding: 6px 12px;
 }
@@ -244,11 +249,16 @@ why they need to be overriden.  */
 
 .md-button.md-default-theme.oppia-learner-confirm-button:focus,
 .md-button.md-default-theme.oppia-learner-confirm-button:hover,
-.md-button.md-default-theme.oppia-learner-got-it-button:focus,
-.md-button.md-default-theme.oppia-learner-got-it-button:hover,
 .md-button.md-default-theme.oppia-learner-hint-solution-button:focus,
 .md-button.md-default-theme.oppia-learner-hint-solution-button:hover {
   background-color: #115fd4;
+  text-decoration: none;
+}
+
+
+.md-button.md-default-theme.oppia-learner-got-it-button:focus,
+.md-button.md-default-theme.oppia-learner-got-it-button:hover {
+  background-color: #00786ec9;
   text-decoration: none;
 }
 
@@ -259,6 +269,21 @@ why they need to be overriden.  */
 .oppia-learner-got-it-button {
   margin-bottom: 25px;
   margin-right: 20px;
+}
+
+.oppia-learner-close-button {
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-size: 1.5em;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.oppia-learner-close-button:focus {
+  outline: none;
 }
 
 /* Attributes for material-icons. */
@@ -4091,6 +4116,20 @@ div.oppia-issues-learner-action {
 }
 
 .conversation-skin-oppia-feedback-container .conversation-skin-oppia-avatar {
+  height: 100px;
+  left: -87px;
+  top: -20px;
+  width: 100px;
+}
+
+.conversation-skin-oppia-feedback-container-response {
+  align-items: center;
+  display: flex;
+  padding: 0 20px;
+  position: relative;
+}
+
+.conversation-skin-oppia-feedback-container-response .conversation-skin-oppia-avatar {
   height: 100px;
   left: -87px;
   top: -20px;

@@ -231,6 +231,10 @@ export class HintsAndSolutionManagerService {
     return this.hintsForLatestCard.length;
   }
 
+  getNumHintsReleased(): number {
+    return this.numHintsReleased;
+  }
+
   isHintViewable(index: number): boolean {
     return index < this.numHintsReleased;
   }
@@ -253,6 +257,10 @@ export class HintsAndSolutionManagerService {
 
   isSolutionConsumed(): boolean {
     return this.solutionConsumed;
+  }
+
+  isSolutionReleased(): boolean {
+    return this.solutionReleased;
   }
 
   recordWrongAnswer(): void {

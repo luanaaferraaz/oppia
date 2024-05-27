@@ -345,4 +345,31 @@ describe('HintsAndSolutionManager service', () => {
       'Solution must be not null to be displayed.'
     );
   });
+
+  it('should return false for isSolutionReleased before the solution is released', () => {
+    hasms.reset([firstHint, secondHint], solution);
+    expect(hasms.isSolutionReleased()).toBe(false);
+  });
+
+  it('should return true for isSolutionReleased after the solution is released', () => {
+    hasms.reset([firstHint, secondHint], solution);
+    hasms.releaseSolution();
+    expect(hasms.isSolutionReleased()).toBe(true);
+  });
+
+  it('should correctly count the number of hints released', fakeAsync(() => {
+    hasms.reset([firstHint, secondHint], solution);
+
+    expect(hasms.getNumHintsReleased()).toBe(0);
+
+    tick(WAIT_FOR_FIRST_HINT_MSEC);
+
+    expect(hasms.getNumHintsReleased()).toBe(1);
+
+    hasms.consumeHint();
+
+    tick(WAIT_FOR_FIRST_HINT_MSEC);
+
+    expect(hasms.getNumHintsReleased()).toBe(2);
+  }));
 });

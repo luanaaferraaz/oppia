@@ -35,12 +35,10 @@ import {
 import {RecordedVoiceovers} from 'domain/exploration/recorded-voiceovers.model';
 import {StateCard} from 'domain/state_card/state-card.model';
 import {AudioTranslationLanguageService} from 'pages/exploration-player-page/services/audio-translation-language.service';
-import {ExplorationPlayerStateService} from 'pages/exploration-player-page/services/exploration-player-state.service';
 import {HintAndSolutionModalService} from 'pages/exploration-player-page/services/hint-and-solution-modal.service';
 import {HintsAndSolutionManagerService} from 'pages/exploration-player-page/services/hints-and-solution-manager.service';
 import {PlayerPositionService} from 'pages/exploration-player-page/services/player-position.service';
 import {PlayerTranscriptService} from 'pages/exploration-player-page/services/player-transcript.service';
-import {StatsReportingService} from 'pages/exploration-player-page/services/stats-reporting.service';
 import {HintAndSolutionButtonsComponent} from './hint-and-solution-buttons.component';
 import {MockTranslatePipe} from 'tests/unit-test-utils';
 import {I18nLanguageCodeService} from 'services/i18n-language-code.service';
@@ -53,8 +51,6 @@ describe('HintAndSolutionButtonsComponent', () => {
   let interactionObjectFactory: InteractionObjectFactory;
   let playerTranscriptService: PlayerTranscriptService;
   let hintAndSolutionModalService: HintAndSolutionModalService;
-  let explorationPlayerStateService: ExplorationPlayerStateService;
-  let statsReportingService: StatsReportingService;
   let i18nLanguageCodeService: I18nLanguageCodeService;
 
   let newCard: StateCard;
@@ -140,10 +136,6 @@ describe('HintAndSolutionButtonsComponent', () => {
     interactionObjectFactory = TestBed.inject(InteractionObjectFactory);
     playerTranscriptService = TestBed.inject(PlayerTranscriptService);
     hintAndSolutionModalService = TestBed.inject(HintAndSolutionModalService);
-    explorationPlayerStateService = TestBed.inject(
-      ExplorationPlayerStateService
-    );
-    statsReportingService = TestBed.inject(StatsReportingService);
     audioTranslationLanguageService = TestBed.inject(
       AudioTranslationLanguageService
     );
@@ -379,30 +371,6 @@ describe('HintAndSolutionButtonsComponent', () => {
     }
   );
 
-  it('should show solution button if solution is released', () => {
-    spyOn(hintsAndSolutionManagerService, 'isSolutionViewable').and.returnValue(
-      true
-    );
-
-    expect(component.isSolutionButtonVisible()).toBe(true);
-  });
-
-  it('should show solution button if solution is released', () => {
-    spyOn(hintsAndSolutionManagerService, 'isSolutionViewable').and.returnValue(
-      true
-    );
-
-    expect(component.isSolutionButtonVisible()).toBe(true);
-  });
-
-  it('should not show solution button if solution is not released', () => {
-    spyOn(hintsAndSolutionManagerService, 'isSolutionViewable').and.returnValue(
-      false
-    );
-
-    expect(component.isSolutionButtonVisible()).toBe(false);
-  });
-
   it('should display hint modal when user clicks on hints icon', fakeAsync(() => {
     spyOn(hintAndSolutionModalService, 'displayHintModal').and.returnValue({
       result: Promise.resolve('success'),
@@ -437,119 +405,6 @@ describe('HintAndSolutionButtonsComponent', () => {
   );
 
   it(
-    'should display solution modal if solution is' + ' already consumed',
-    fakeAsync(() => {
-      spyOn(
-        hintsAndSolutionManagerService,
-        'isSolutionConsumed'
-      ).and.returnValue(true);
-      spyOn(explorationPlayerStateService, 'isInQuestionMode').and.returnValue(
-        false
-      );
-      spyOn(statsReportingService, 'recordSolutionHit');
-      spyOn(playerPositionService, 'getCurrentStateName').and.returnValue(
-        'state1'
-      );
-      spyOn(
-        hintAndSolutionModalService,
-        'displaySolutionModal'
-      ).and.returnValue({
-        result: Promise.resolve('success'),
-      } as NgbModalRef);
-
-      expect(component.solutionModalIsActive).toBe(false);
-
-      component.onClickSolutionButton();
-      tick();
-
-      expect(component.solutionModalIsActive).toBe(true);
-    })
-  );
-
-  it('should close solution modal', fakeAsync(() => {
-    spyOn(hintsAndSolutionManagerService, 'isSolutionConsumed').and.returnValue(
-      true
-    );
-    spyOn(explorationPlayerStateService, 'isInQuestionMode').and.returnValue(
-      false
-    );
-    spyOn(statsReportingService, 'recordSolutionHit');
-    spyOn(playerPositionService, 'getCurrentStateName').and.returnValue(
-      'state1'
-    );
-    spyOn(hintAndSolutionModalService, 'displaySolutionModal').and.returnValue({
-      result: Promise.reject(),
-    } as NgbModalRef);
-
-    component.onClickSolutionButton();
-    tick();
-
-    expect(component.solutionModalIsActive).toBe(false);
-  }));
-
-  it(
-    'should open interstitial modal if solution has not' +
-      ' been consumed before and then display solution modal' +
-      ' after user confirms',
-    fakeAsync(() => {
-      spyOn(
-        hintsAndSolutionManagerService,
-        'isSolutionConsumed'
-      ).and.returnValue(false);
-      spyOn(
-        hintAndSolutionModalService,
-        'displaySolutionInterstitialModal'
-      ).and.returnValue({
-        result: Promise.resolve('success'),
-      } as NgbModalRef);
-      spyOn(component, 'displaySolutionModal').and.callFake(() => {});
-
-      component.onClickSolutionButton();
-      tick();
-
-      expect(component.displaySolutionModal).toHaveBeenCalled();
-    })
-  );
-
-  it(
-    'should close interstitial modal if solution has not' +
-      ' been consumed before and user click cancel',
-    fakeAsync(() => {
-      spyOn(
-        hintsAndSolutionManagerService,
-        'isSolutionConsumed'
-      ).and.returnValue(false);
-      spyOn(
-        hintAndSolutionModalService,
-        'displaySolutionInterstitialModal'
-      ).and.returnValue({
-        result: Promise.reject('failure'),
-      } as NgbModalRef);
-      spyOn(component, 'displaySolutionModal').and.callFake(() => {});
-
-      component.solutionModalIsActive = true;
-      component.onClickSolutionButton();
-      tick();
-
-      expect(component.solutionModalIsActive).toBe(false);
-      expect(component.displaySolutionModal).not.toHaveBeenCalled();
-    })
-  );
-
-  it(
-    "should show 'Would you like to view the complete solution?" + " ' tooltip",
-    () => {
-      spyOn(
-        hintsAndSolutionManagerService,
-        'isSolutionTooltipOpen'
-      ).and.returnValues(true, false);
-
-      expect(component.isSolutionTooltipVisible()).toBe(true);
-      expect(component.isSolutionTooltipVisible()).toBe(false);
-    }
-  );
-
-  it(
     "should show 'Need help? View a hint for this" + " problem!' tooltip",
     () => {
       spyOn(
@@ -570,15 +425,5 @@ describe('HintAndSolutionButtonsComponent', () => {
 
     expect(component.isHintConsumed(0)).toBe(true);
     expect(component.isHintConsumed(0)).toBe(false);
-  });
-
-  it('should show solution is consumed or not', () => {
-    spyOn(
-      hintsAndSolutionManagerService,
-      'isSolutionConsumed'
-    ).and.returnValues(true, false);
-
-    expect(component.isSolutionConsumed()).toBe(true);
-    expect(component.isSolutionConsumed()).toBe(false);
   });
 });

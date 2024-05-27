@@ -9,20 +9,13 @@
               *ngIf="hintIndex === 0 && isHintButtonVisible(hintIndex)"
               [ngClass]="{'viewed': isHintConsumed(hintIndex)}"
               (click)="displayHintModal(hintIndex)">
-        <i class="fas fa-lightbulb"></i>
+          {{ hintIndex + 1 }}
       </button>
       <button class="oppia-learner-hint-solution-button md-button md-default-theme e2e-test-view-hint"
               *ngIf="hintIndex && isHintButtonVisible(hintIndex)"
               [ngClass]="{'viewed': isHintConsumed(hintIndex)}"
               (click)="displayHintModal(hintIndex)">
-        <i class="fas fa-lightbulb"></i>
-      </button>
-    </li>
-    <li *ngIf="isSolutionButtonVisible()">
-      <button class="oppia-learner-hint-solution-button md-button md-default-theme e2e-test-view-solution"
-              [ngClass]="{'viewed': isSolutionConsumed()}"
-              (click)="onClickSolutionButton()">
-        <i class="fas fa-lightbulb oppia-lightbulb-yellow"></i>
+          {{ hintIndex + 1 }}
       </button>
     </li>
   </ul>
@@ -33,18 +26,6 @@
               class="btn close"
               aria-label="Close"
               (click)="isVisible = !isVisible">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  </div>
-  <div class="hint-container solution-container"
-       *ngIf="isTooltipForSolutionVisible && isSolutionTooltipVisible() && !iframed">
-    <div class="hint-box hint-box-add-ons">
-      <span [innerHTML]="'I18N_SOLUTION_NEED_HELP' | translate"></span>
-      <button type="button"
-              class="btn close"
-              aria-label="Close"
-              (click)="isTooltipForSolutionVisible = !isTooltipForSolutionVisible">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

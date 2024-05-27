@@ -1,51 +1,72 @@
-<div class="oppia-learner-solution-interstitial-modal-title">
-  <span [innerHTML]="'I18N_WARNING_MODAL_TITLE' | translate"></span>
-</div>
+<div class="modal-content" >
+  <button class="oppia-learner-close-button" (click)="cancel()">&times;</button>
 
-<div class="modal-body">
-  <span class="oppia-learner-solution-interstitial-modal-body">
-    <span [innerHTML]="'I18N_WARNING_MODAL_DESCRIPTION' | translate"></span>
-  </span>
-</div>
+  <div class="modal-body">
+    <span class="oppia-learner-solution-interstitial-modal-body">
+      <span [innerHTML]="'I18N_WARNING_MODAL_DESCRIPTION' | translate"></span>
+    </span>
+  </div>
 
-<div class="oppia-learner-solution-container">
-  <button class="oppia-modal-cancel-button md-button md-default-theme ml-auto" (click)="cancel()">
-    <span [innerHTML]="'I18N_MODAL_CANCEL_BUTTON' | translate"></span>
-  </button>
-  <button class="oppia-learner-got-it-button e2e-test-learner-got-it-button md-button md-default-theme e2e-test-continue-to-solution-btn"
-          (click)="confirm()">
-    <span [innerHTML]="'I18N_SHOW_SOLUTION_BUTTON' | translate"></span>
-  </button>
+  <div class="oppia-learner-solution-container">
+    <button class="oppia-learner-view-solution-button e2e-test-learner-got-it-button md-button md-default-theme e2e-test-continue-to-solution-btn"
+            (click)="confirm()">
+      <span [innerHTML]="'I18N_SHOW_SOLUTION_BUTTON' | translate"></span>
+    </button>
+    <button class="oppia-modal-cancel-button md-button md-default-theme ml-auto" (click)="cancel()">
+      <span [innerHTML]="'I18N_MODAL_CANCEL_BUTTON' | translate"></span>
+    </button>
+  </div>
+  <span class="clearfix"></span>
 </div>
-<span class="clearfix"></span>
 
 <style>
-  .oppia-learner-solution-interstitial-modal-title {
-    color: #00786d;
+  .modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    left: 50%;
+    max-height: 100vh;
+    max-width: 35%;
+    overflow-y: auto;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .oppia-learner-solution-interstitial-modal-body {
     font-family: 'Capriola', 'Roboto', 'Arial', sans-serif;
-    font-size: 1.75em;
-    font-weight: bold;
+    font-size: 1.40em;
     padding-top: 20px;
     text-align: center;
   }
 
-  .oppia-learner-solution-interstitial-modal-body {
-    word-wrap: break-word;
-  }
-
   .oppia-learner-solution-container {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
+
+  .oppia-learner-view-solution-button {
+    background-color: #fff;
+    color: #00786d;
+    height: 35px;
+    margin: 0 20px;
+    outline: 2px solid #00786d;
+    padding: 6px 12px;
   }
 
   .md-button.oppia-modal-cancel-button {
-    background: #9a9a9a;
+    background: #00786d;
     color: #fff;
     height: 35px;
+    margin: 0 20px;
     padding: 6px 12px;
   }
+
   .md-button.md-default-theme.oppia-modal-cancel-button:focus,
   .md-button.md-default-theme.oppia-modal-cancel-button:hover {
-    background: #7a7a7a;
+    background: #00786d;
   }
 </style>
